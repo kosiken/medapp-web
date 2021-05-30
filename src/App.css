@@ -1,38 +1,85 @@
-.App {
-  text-align: center;
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  font-family: 'Lato', sans-serif;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.column {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+.space-btwn {
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.gradients {
+  background: linear-gradient(117.45deg, #69e805 0%, #03b50a 100%);
+}
+
+.video-box {
+  background: #e8e8e9;
+  height: 100vh;
+}
+
+.relic-chat {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+@media screen and (min-device-width: 1200px) and (max-device-width: 1600px) and (-webkit-min-device-pixel-ratio: 1) {
+  .relic-chat {
+    display: -ms-grid;
+    display: grid;
+    -ms-grid-columns: 67vw auto;
+        grid-template-columns: 67vw auto;
   }
 }
+
+.message-box {
+  background-color: white;
+  height: 100vh;
+  position: relative;
+  padding: 0 10px;
+  overflow: hidden;
+}
+
+.chat-header {
+  top: 0;
+  right: 0;
+  width: 100%;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.scroll-y {
+  overflow-y: scroll !important;
+}
+
+.feint {
+  color: #6B779A;
+}
+
+.none {
+  display: none;
+}
+/*# sourceMappingURL=App.css.map */

@@ -1,0 +1,35 @@
+.message {
+  max-width: 80%;
+  padding: 15px;
+  color: white;
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
+.message.right {
+  border-radius: 15px 15px 0px 15px;
+}
+
+.message.left {
+  background: #f1f4f7;
+  color: #6b779a;
+  border-radius: 15px 15px 15px 0px;
+}
+
+.mb {
+  position: relative;
+  margin: 0 0 10px 0;
+}
+
+.mb.left-div {
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+.mb.right-div {
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+}
+/*# sourceMappingURL=MessageBox.module.css.map */
