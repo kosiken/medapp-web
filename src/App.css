@@ -34,7 +34,7 @@ body {
 }
 
 .video-box {
-  background: #e8e8e9;
+  background: #000000;
   height: 100vh;
 }
 
@@ -42,6 +42,12 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) {
+  .relic-chat {
+    display: block;
+  }
 }
 
 @media screen and (min-device-width: 1200px) and (max-device-width: 1600px) and (-webkit-min-device-pixel-ratio: 1) {
@@ -81,5 +87,32 @@ body {
 
 .none {
   display: none;
+}
+
+.center {
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) {
+  .none {
+    display: none;
+  }
+}
+
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 1) {
+  .none {
+    display: none;
+  }
+}
+
+@media screen and (min-device-width: 1200px) and (max-device-width: 1600px) and (-webkit-min-device-pixel-ratio: 1) {
+  .none {
+    display: block;
+  }
 }
 /*# sourceMappingURL=App.css.map */
