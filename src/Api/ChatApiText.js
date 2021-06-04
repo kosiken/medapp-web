@@ -1,14 +1,17 @@
 import io from "socket.io-client";
 
 const Servers = {
+ 
+  
+
   iceServers: [
     {
       urls: ["stun:us-turn1.xirsys.com"],
     },
     {
       username:
-        "gHW-9xnxwvqyc8eryWn3WQ9mdCs5E9o6GucxemiIDGZsf312-1IIeUDAvtNwTgQnAAAAAGC5Jp9rb3Npa2Vu",
-      credential: "db593dd4-c49d-11eb-bd48-0242ac140004",
+        process.env.REACT_APP_RTC_USERNAME,
+      credential: process.env.REACT_APP_RTC_CREDENTIALS,
       urls: [
         "turn:us-turn1.xirsys.com:80?transport=udp",
         "turn:us-turn1.xirsys.com:3478?transport=udp",
@@ -20,6 +23,7 @@ const Servers = {
     },
   ],
 };
+
 
 export default class ChatApiText {
   constructor(
@@ -38,6 +42,7 @@ export default class ChatApiText {
       servers: Servers,
     }
   ) {
+    console.log(Servers)
     this.user = user;
     this.peerCount = 0;
     this.peers = {};
