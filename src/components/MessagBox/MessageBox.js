@@ -5,13 +5,13 @@ import styles from './MessageBox.module.css'
 
 const MessageBox = ({message}) => {
     const ContainerClasses = classNames(styles.mb, {
-        [styles['right-div']]:message.recieved,
-        [styles['left-div']]: !message.recieved
+        [styles['right-div']]:!message.recieved,
+        [styles['left-div']]: message.recieved
     })
 
     const Classes = classNames(styles.message, {
-        [styles['right']]:message.recieved,
-        [styles['left']]: !message.recieved
+        [styles['right']]:!message.recieved,
+        [styles['left']]: message.recieved
     })
     return (
         <div   className={"flex column " + ContainerClasses}>

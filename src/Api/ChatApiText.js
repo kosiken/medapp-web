@@ -1,25 +1,6 @@
 import io from "socket.io-client";
 
 const Servers = {
-  // iceServers: [
-  //   { urls: "stun:stun.l.google.com:19302" },
-  //   { urls: "stun:stun.stunprotocol.org:3478" },
-  //   { urls: "stun:stun.sipnet.net:3478" },
-  //   { urls: "stun:stun.ideasip.com:3478" },
-  //   { urls: "stun:stun.iptel.org:3478" },
-  //   //   { urls: "turn:numb.viagenie.ca", username: "imvasanthv@gmail.com", credential: "d0ntuseme" },
-  //   {
-  //     urls: [
-  //       "turn:173.194.72.127:19305?transport=udp",
-  //       "turn:[2404:6800:4008:C01::7F]:19305?transport=udp",
-  //       "turn:173.194.72.127:443?transport=tcp",
-  //       "turn:[2404:6800:4008:C01::7F]:443?transport=tcp",
-  //     ],
-  //     username: "CKjCuLwFEgahxNRjuTAYzc/s6OMT",
-  //     credential: "u1SQDR/SQsPQIxXNWQT7czc/G4c=",
-  //   },
-  // ],
-
   iceServers: [
     {
       urls: ["stun:us-turn1.xirsys.com"],
@@ -40,18 +21,16 @@ const Servers = {
   ],
 };
 
-
-
-class ChatApi {
+export default class ChatApiText {
   constructor(
     user,
     config = {
-      audio: true,
-      video: true,
+   
+        
       onAddPeer: () => {},
 
       OnMessage: () => {},
-      onAddStream: () => {},
+      //   onAddStream: () => {},
       OnDisconnect: () => {},
 
       addLocalStream: true,
@@ -59,23 +38,19 @@ class ChatApi {
       servers: Servers,
     }
   ) {
-    if (!user) {
-      throw new TypeError("user must be specified");
-    }
     this.user = user;
     this.peerCount = 0;
     this.peers = {};
     this.dataChannels = {};
     this.remoteDataChannels = {};
-    this.streams = {};
-    this.localMediaStream = null;
-    this.USE_AUDIO = config.audio;
-    this.USE_VIDEO = config.video;
-    this.OnMessage = config.OnMessage;
+  //  this.streams = {};
+    
+  this.OnMessage = config.OnMessage;
     this.onAddStream = config.onAddStream;
     this.addLocalStream = config.addLocalStream;
     this.onAddPeer = config.onAddPeer;
     this.OnDisconnect = config.OnDisconnect;
+
   }
 
   initialize(url) {
@@ -88,11 +63,12 @@ class ChatApi {
     this.sock.on("disconnect", (reason) => this.onDisconnect(reason));
   }
 
+  
+
   async addPeer(config) {
     const ChatObject = this;
     const signalingSocket = this.sock;
-    let streams = this.streams;
-    let peers = this.peers,
+     let peers = this.peers,
       id = config.id || config.peer_id,
       peer_id = id;
 
@@ -104,19 +80,12 @@ class ChatApi {
       ChatObject.onIceCandidate(event, peer_id);
     };
 
-    peerConnection.onaddstream = function (event) {
-      // ;
-      streams[peer_id] = event.stream;
-      console.log("loions");
-      ChatObject.onAddStream("remote", event.stream, peer_id);
-    };
-
+    
     peerConnection.ondatachannel = function (event) {
       ChatObject.onDataChannel(event, peer_id);
     };
 
-    if (this.localMediaStream) peerConnection.addStream(this.localMediaStream);
-
+ 
     this.dataChannels[peer_id] =
       peerConnection.createDataChannel("talk__data_channel");
 
@@ -142,35 +111,28 @@ class ChatApi {
     this.onAddPeer(config);
   }
 
-  /**
+  onRemoteDataChannelOpen(peer_id) {
+    console.log("Data channel: " + peer_id + " is open");
+  }
+
+
+    /**
    *
    * @param {string} room
    * @returns {Promise<void>}
    */
-  async joinChat(room) {
-    console.log(this);
-    if (!this.localMediaStream && this.addLocalStream) {
-      try {
-        this.localMediaStream = await navigator.mediaDevices.getUserMedia({
-          audio: this.USE_AUDIO,
-          video: this.USE_VIDEO,
+     async joinChat(room) {
+     //   console.log(this);
+ 
+        this.sock.emit("join", {
+          room,
+          Name: this.user.FirstName + " " + this.user.LastName,
+          Role: this.user.Role,
+          id: this.user.id,
         });
-      } catch (err) {
-        console.log(err);
-        return;
       }
-      this.toggleVideo();
-      this.onAddStream("local", this.localMediaStream, null);
-    }
-    this.sock.emit("join", {
-      room,
-      Name: this.user.FirstName + " " + this.user.LastName,
-      Role: this.user.Role,
-      id: this.user.id,
-    });
-  }
 
-  /**
+        /**
    *
    * @param {RTCDataChannelEvent} event;
    * @param {string} peer_id;
@@ -193,16 +155,14 @@ class ChatApi {
     //(ChatObject.OnMessage)
   }
 
-  onRemoteDataChannelOpen(peer_id) {
-    console.log("Data channel: " + peer_id + " is open");
-  }
+
 
   /**
    *
    * @param {RTCPeerConnectionIceEvent} event
    * @param {string} peer_id
    */
-  onIceCandidate(event, peer_id) {
+   onIceCandidate(event, peer_id) {
     const signalingSocket = this.sock;
     if (event.candidate) {
       signalingSocket.emit("data-tran-sock", {
@@ -336,14 +296,5 @@ class ChatApi {
     this.OnDisconnect();
   }
 
-  async toggleVideo() {
-    // const ChatObject = this;
-    // this.localMediaStream.active
-    this.localMediaStream.getAudioTracks()[0].enabled =
-      !this.localMediaStream.getAudioTracks()[0].enabled;
-    this.localMediaStream.getVideoTracks()[0].enabled =
-      !this.localMediaStream.getVideoTracks()[0].enabled;
-  }
+    
 }
-
-export default ChatApi;

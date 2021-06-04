@@ -45,7 +45,9 @@ const TypingBox = ({ onSubmit = () => null }) => {
         )} 
         <span contentEditable ref={ref} id="message" className={inputSpanClasses} />
       </div>
-      <IconButton borderless onClick={onSend} role="icon" aria-label="send" >
+      <IconButton borderless onClick={onSend} role="icon" aria-label="send" style={{
+        color: "#5E4B56"
+      }} >
         <SendIcon />
       </IconButton>
     </div>
